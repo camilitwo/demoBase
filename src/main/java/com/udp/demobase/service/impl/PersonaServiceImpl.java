@@ -18,17 +18,14 @@ public class PersonaServiceImpl implements PersonaService {
     private final PersonaRepository personaRepository;
     @Override
     public List<PersonaDTO> getAllPersonas() {
-        List<PersonaDTO> listaPersona = null;
-        List<Persona> lista = personaRepository.findAll();
-        //copy properties from Persona to PersonaDTO
-        listaPersona = lista.stream().map(persona -> PersonaDTO.builder()
+        List<Persona> personList = personaRepository.findAll();
+
+        return personList.stream().map(persona -> PersonaDTO.builder()
                 .id(persona.getId())
                 .nombre(persona.getNombre())
                 .apellido(persona.getApellido())
                 .direccion(persona.getDireccion())
                 .build()).collect(Collectors.toList());
-
-        return listaPersona;
     }
 
     @Override
