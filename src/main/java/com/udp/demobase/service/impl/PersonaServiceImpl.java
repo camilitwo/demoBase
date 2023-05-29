@@ -25,6 +25,10 @@ public class PersonaServiceImpl implements PersonaService {
                 .nombre(persona.getNombre())
                 .apellido(persona.getApellido())
                 .direccion(persona.getDireccion())
+                .mail(persona.getMail())
+                .rut(persona.getRut())
+                .telefono(persona.getTelefono())
+                .status(persona.getStatus())
                 .build()).collect(Collectors.toList());
     }
 
@@ -32,6 +36,40 @@ public class PersonaServiceImpl implements PersonaService {
     public void createPersona(PersonaDTO personaDTO) {
         Persona persona = new Persona();
         BeanUtils.copyProperties(personaDTO, persona);
+        persona.setStatus('1');
         personaRepository.save(persona);
     }
+
+    @Override
+    public void updatePersona(PersonaDTO personaDTO) {
+        Persona persona = new Persona();
+        BeanUtils.copyProperties(personaDTO, persona);
+        personaRepository.save(persona);
+    }
+
+    @Override
+    public void deletePersona(PersonaDTO personaDTO) {
+        Persona persona = new Persona();
+        BeanUtils.copyProperties(personaDTO, persona);
+        personaRepository.delete(persona);
+    }
+
+    @Override
+    public PersonaDTO getPersonaByMail(String mail) {
+        Persona persona = personaRepository.findByMail(mail);
+        PersonaDTO personaDTO = new PersonaDTO();
+        BeanUtils.copyProperties(persona,personaDTO);
+
+        return personaDTO;
+    }
+
+    @Override
+    public PersonaDTO getPersonaByRut(String rut) {
+        Persona persona = personaRepository.findByRut(rut);
+        PersonaDTO personaDTO = new PersonaDTO();
+        BeanUtils.copyProperties(persona, personaDTO);
+
+        return personaDTO;
+    }
 }
+

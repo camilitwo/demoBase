@@ -16,4 +16,8 @@ public class Persona {
     private String nombre;
     private String apellido;
     private String direccion;
+    private String telefono;
+    private String mail;
+    private String rut;
+    private char status;//0 - NO Activo, 1 ACTIVO
 }

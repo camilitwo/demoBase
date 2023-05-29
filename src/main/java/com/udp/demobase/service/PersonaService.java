@@ -8,4 +8,12 @@ public interface PersonaService {
     List<PersonaDTO> getAllPersonas();
 
     void createPersona(PersonaDTO personaDTO);
+
+    void updatePersona(PersonaDTO personaDTO);
+
+    void deletePersona(PersonaDTO personaDTO);
+
+    PersonaDTO getPersonaByMail(String mail);
+
+    PersonaDTO getPersonaByRut(String rut);
 }

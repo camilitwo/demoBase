@@ -8,4 +8,10 @@ import org.springframework.stereotype.Repository;
 public interface PersonaRepository extends JpaRepository<Persona, Long> {
 
     Persona findByNombre(String nombre);
+
+    Persona findByMail(String mail);
+
+    Persona findByRut(String rut);
+
+    Persona findByStatus(char status);
 }
