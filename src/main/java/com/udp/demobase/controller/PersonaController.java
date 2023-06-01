@@ -66,6 +66,13 @@ public class PersonaController {
         return ResponseEntity.ok(personaService.getPersonaByRut(rut));
     }
 
+    @RequestMapping(value = "find-by-filter", method = RequestMethod.GET)
+    public ResponseEntity<List<PersonaDTO>> getPersonasByFilter(
+            @RequestParam(name = "filter", required = false) String filtro
+    ) throws Exception {
+        return ResponseEntity.ok(personaService.getPersonasByFilter(filtro));
+    }
+
 
     /*
     @RequestMapping(value = "find-active", method = RequestMethod.GET)

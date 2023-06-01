@@ -2,6 +2,7 @@ package com.udp.demobase.service;
 
 import com.udp.demobase.dto.PersonaDTO;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 public interface PersonaService {
@@ -16,4 +17,6 @@ public interface PersonaService {
     PersonaDTO getPersonaByMail(String mail);
 
     PersonaDTO getPersonaByRut(String rut);
+
+    List<PersonaDTO> getPersonasByFilter(String filtro) throws Exception;
 }

@@ -6,8 +6,13 @@ import com.udp.demobase.repository.PersonaRepository;
 import com.udp.demobase.service.PersonaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.BeanWrapper;
+import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -71,5 +76,35 @@ public class PersonaServiceImpl implements PersonaService {
 
         return personaDTO;
     }
+
+    @Override
+    public List<PersonaDTO> getPersonasByFilter(String filtro) throws Exception {
+
+        List<Persona> personList = personaRepository.findAll();
+
+
+        PersonaDTO builderObject = buildObject(PersonaDTO.class, personList.get(0), Arrays.asList(filtro.split(",")));
+
+        return Arrays.asList(builderObject);
+
+    }
+
+    private static <T> T buildObject(Class<T> targetClass, Object sourceObject, List<String> attributeNames) throws Exception {
+        T targetObject = targetClass.getDeclaredConstructor().newInstance();
+        BeanWrapper sourceWrapper = new BeanWrapperImpl(sourceObject);
+        BeanWrapper targetWrapper = new BeanWrapperImpl(targetObject);
+
+        for (String attributeName : attributeNames) {
+            attributeName = attributeName.trim().toLowerCase();
+            if (sourceWrapper.isReadableProperty(attributeName) && targetWrapper.isWritableProperty(attributeName)) {
+                Object attributeValue = sourceWrapper.getPropertyValue(attributeName);
+                targetWrapper.setPropertyValue(attributeName, attributeValue);
+            }
+        }
+
+        return targetObject;
+    }
+
+
 }
 
